@@ -44,31 +44,36 @@ DEPS = $(SRC) $(HEADERS)
 OBJ = obj/gas.o
 EXE = gas.exe
 
-all : test_gpu obj $(EXE)
+all : test_gpu obj $(EXE)  ## Build GPU test, objects, and the main executable
 	@echo "Built all the targets: "$(EXE)
 
-$(OBJ_MYLIBS): obj/%.o: lib/%.cpp obj ${DEPS_MYLIBS}
+$(OBJ_MYLIBS): obj/%.o: lib/%.cpp obj ${DEPS_MYLIBS}  # Compile library object files
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-obj/gas.o : src/gas.cpp $(DEPS) $(SRC_MYLIBS) $(DEPS_MYLIBS) obj
+obj/gas.o : src/gas.cpp $(DEPS) $(SRC_MYLIBS) $(DEPS_MYLIBS) obj  # Compile CUDA gas object
 	$(NVCC) $(NVCCFLAGS) -c src/gas.cpp -o $@
 
-gas.exe : obj/gas.o $(OBJ_MYLIBS)
+gas.exe : obj/gas.o $(OBJ_MYLIBS)  ## Link final executable
 	$(NVCC) $(NVCCFLAGS) $^ -o $@
 
-obj :
-    mkdir -p obj
+obj :  # Create object directory
+	mkdir -p obj
 
-clean-obj :
+clean-obj :  # Remove all object files
 	rm -f $(OBJ) $(OBJ_MYLIBS)
 
-clean : clean-obj
+clean : clean-obj  ## Remove objects and executables
 	rm -f $(EXE)
 
-test_gpu : lib/gpu_comm.cuh test/gpu/check_gpu.cu
+test_gpu : lib/gpu_comm.cuh test/gpu/check_gpu.cu  ## Compile and run GPU test
 	cd test/gpu/ ; \
 	$(NVCC) $(NVCCFLAGS) -c check_gpu.cu -o check_gpu.exe ; \
 	./check_gpu.exe
 	@echo "GPU compilation test executed successfully!"
 
-.PHONY : all clean clean-obj test_gpu
+help:  ## Show this help
+	@echo "Available targets:"
+	@grep -E '^[a-zA-Z_-]+ *:.*?##' $(MAKEFILE_LIST) | \
+	    awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
+
+.PHONY : all clean clean-obj obj test_gpu help
