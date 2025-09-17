@@ -8,7 +8,9 @@ ADD_COMPILER_FLAGS ?=
 CXXFLAGS := $(sort $(DEFAULT_CXXFLAGS) $(ADD_COMPILER_FLAGS))
 
 NVCC = nvcc
-CUDA_CC = 50
+ifndef CUDA_CC
+	CUDA_CC := $(shell nvidia-smi --query-gpu=compute_cap --format=csv,noheader | head -1 | tr -d '.')
+endif
 NVCCFLAGS = -x cu -std=c++14 --diag-warn -Xcompiler "-Wall -Wextra" -gencode arch=compute_$(CUDA_CC),code=sm_$(CUDA_CC) -v
 #==================================#
 
@@ -17,11 +19,11 @@ NVCCFLAGS = -x cu -std=c++14 --diag-warn -Xcompiler "-Wall -Wextra" -gencode arc
 DEBUG_FLAGS = -g -fno-inline
 RELEASE_FLAGS = -O3
 ifeq ($(DEBUG), YES)
-    CXXFLAGS += $(DEBUG_FLAGS)
-    NVCCFLAGS += -g -G
+	CXXFLAGS += $(DEBUG_FLAGS)
+	NVCCFLAGS += -g -G
 else
-    CXXFLAGS += $(RELEASE_FLAGS)
-    NVCCFLAGS += $(RELEASE_FLAGS)
+	CXXFLAGS += $(RELEASE_FLAGS)
+	NVCCFLAGS += $(RELEASE_FLAGS)
 endif
 #==================================#
 
