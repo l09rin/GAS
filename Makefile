@@ -64,10 +64,11 @@ clean-obj :  # Remove all object files
 
 clean : clean-obj  ## Remove objects and executables
 	rm -f $(EXE)
+	rm -f test/gpu/check_gpu.exe
 
 test_gpu : lib/gpu_comm.cuh test/gpu/check_gpu.cu  ## Compile and run GPU test
 	cd test/gpu/ ; \
-	$(NVCC) $(NVCCFLAGS) -c check_gpu.cu -o check_gpu.exe ; \
+	$(NVCC) $(NVCCFLAGS) check_gpu.cu -o check_gpu.exe ; \
 	./check_gpu.exe
 	@echo "GPU compilation test executed successfully!"
 
