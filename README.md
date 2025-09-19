@@ -2,7 +2,7 @@
 **G**PU **A**ccelerated numerical **S**imulations in CUDA–C++.
 
 Currently supports **constant-energy Molecular Dynamics (MD)** of **Lennard–Jones** particle systems.
-Originally based on the [MoDyCa](https://github.com/l09rin/MoDyCa) CPU project.
+Originally based on the [MoDyCa](https://github.com/l09rin/MoDyCa) project (serial code running on CPU).
 
 ---
 
@@ -75,7 +75,7 @@ Two options:
    ``` 
    INITIAL_CONFIGURATION file <xyz|sph|lmp> <file_name> <energy_per_particle>
    ```
-   - `xyz` : XYZ format
+   - `xyz` : _XYZ_-like format
    - `sph` : sph data file as dumped by this [Event Driven Molecular Dynamics code](https://github.com/FSmallenburg/EDMD)
    - `lmp` : LAMMPS data file
 2. **Generated configuration**  
@@ -109,7 +109,7 @@ Two options:
 ### Output Control
 - **`SAVING_INTERVALS <global_quantities> <configurations> <backup>`**  :  Output frequency for thermodynamic observables, snapshots, and position/velocity backup files.
 - **`SAVE_FORMAT <xyz>`**  :  Format for particle trajectory (`xyz` supported).  
-- **`SAVE_ATTRIBUTE <name> <eq_flag> <prod_flag>`**  :  Control saving of attributes in equilibration / production runs. Options:  
+- **`SAVE_ATTRIBUTE <name> <eq_flag> <prod_flag>`**  :  Control saving of attributes in equilibration / production runs (flags can be set to `0` or `1`). Options:  
   - `particles`
   - `forces`
   - `velocities`
@@ -134,7 +134,7 @@ Two options:
 The simulation produces:
 - **Trajectory files** (particle positions over time)  
 - **Thermodynamic logs** (energy, temperature, pressure)  
-- **Simulation parameter files** depending on `SAVE_*` options  
+- **Simulation parameter files**
 
 All outputs are written into the directory specified by  
 `SAVING_DIRECTORY_NAME` (default: current working directory).
