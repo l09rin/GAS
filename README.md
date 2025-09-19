@@ -80,11 +80,13 @@ Two options:
    - `lmp` : LAMMPS data file
 2. **Generated configuration**  
    ```
-   INITIAL_CONFIGURATION <random|fcc|bcc> <number_of_particles> <energy_per_particle>
+   INITIAL_CONFIGURATION <random|fcc|bcc|square|hex> <number_of_particles> <energy_per_particle>
    ```
-   - `random` : random placement  
-   - `fcc` : face-centered cubic lattice  
-   - `bcc` : body-centered cubic lattice  
+   - `random` : random placement
+   - `fcc` : face-centered cubic lattice
+   - `bcc` : body-centered cubic lattice
+   - `square` : 2D square lattice
+   - `hex` : 2D hexagonal lattice
 
 - **`INITIAL_VELOCITIES_BY_FILE <flag> <file>`**  :  If `flag=1`, load initial velocities from `file`.  
 
