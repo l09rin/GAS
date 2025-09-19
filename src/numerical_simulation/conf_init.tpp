@@ -206,7 +206,7 @@ void configuration<particle>::generate_ideal_lattice( const char *ltype ) {     
       }
     }
 
-  } else if( strcmp( ltype , "hcp2D" ) == 0 ) {
+  } else if( strcmp( ltype , "hex" ) == 0 ) {
     int inserted_particles = 0 ;
     double lattice_step = sqrt( box_sides.volume() * 2.0 / sqrt(3) / numberOfPart ) ;
     int ncells_y = 2 * round( sqrt( numberOfPart / sqrt(3) ) ) , ncells_x = 0 ;
@@ -216,7 +216,7 @@ void configuration<particle>::generate_ideal_lattice( const char *ltype ) {     
       cout << "*** ERROR: Please, choose a different particles number" << endl ;
       exit( EXIT_FAILURE ) ;
     } else {
-      cout << endl << "  Generation of a hcp 2D lattice; cells per side : " << ncells_x << "," << ncells_y << " ; lattice constant : " << lattice_step << endl ;
+      cout << endl << "  Generation of a hexagonal 2D lattice; cells per side : " << ncells_x << "," << ncells_y << " ; lattice constant : " << lattice_step << endl ;
     }
     box_sides.position.x = lattice_step * ncells_x ;
     box_sides.position.y = lattice_step * ncells_y * 0.5*sqrt(3.0) ;
