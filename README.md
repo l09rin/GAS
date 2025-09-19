@@ -47,7 +47,7 @@ This will create an **output directory** containing results.
 
 ## Input
 
-The simulation is controlled by a plain-text input file (example: [`examples/lennard_jones/input_2D.gpu`](examples/lennard_jones/input_2D.gpu)).
+The simulation is controlled by a plain-text input file (example: [`examples/lennard_jones/input_2D-gpu.dat`](examples/lennard_jones/input_2D-gpu.dat)).
 Each line consists of a **keyword** followed by one or more parameters.  
 Comments start with `#`.  
 
