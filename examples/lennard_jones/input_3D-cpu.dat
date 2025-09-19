@@ -35,7 +35,6 @@ SAVING_INTERVALS 1 1 20000					# global_quantities configurations backup_positio
  SAVE_TEMPERATURE 1 0
      # SAVE_MSD 0 1 <format:all|mols_cm> {<steps_file_name>}	# all = for all particles , mols_cm = for centers of mass of all molecules
  SAVE_MSD 0 0 all
- SAVE_GYR 0 0
  SAVE_VIRIAL_PRESSURE 1 1
 
 # INITIAL_VELOCITIES_BY_FILE 0 velocities.dat				# if = 1 it loads the velocities by this specified file
