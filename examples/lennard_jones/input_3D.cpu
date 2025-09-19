@@ -3,32 +3,28 @@ DEVICE CPU
 PARTICLE_CLASS particle_3D		# options : particle_3D (default) , particle_2D
 ENSEMBLE NVE
 
-SIGMA 1								# length unit (not in use now)
-EPSILON 1							# energy unit (not in use now)
-PARTICLE_MASS 1							# Particle mass
+SIGMA 1								# length unit (not used)
+EPSILON 1							# energy unit (not used)
+PARTICLE_MASS 1
 SIDE 20.	      						# In units of SIGMA
-     # SIDES 10. 10. 10.    						# In units of SIGMA
-KbT 3.0								# in units of EPSILON, fixed in NVT ensemble
-     # INITIAL_CONFIGURATION file <xyz|nico_bonds|nico_bonds_pbc> <file_name> <energy_per_particle(EPSILON)>
-     # INITIAL_CONFIGURATION file <nico_rings|nico_rings_pbc> <conf_file_name> <polydispersity_file_name> <energy_per_particle(EPSILON)>
+     # SIDES 10. 10. 10.
+KbT 3.0								# in units of EPSILON, not used
+
+     # INITIAL_CONFIGURATION file <xyz|sph|lmp> <file_name> <energy_per_particle(EPSILON)>
      # INITIAL_CONFIGURATION (random,fcc,bcc) <number_of_particles> <energy_per_particle(EPSILON)>
 INITIAL_CONFIGURATION random 2400 3.673
 
 #  <cutoff(SIGMA)> <shift(EPSILON)|auto> <verlet_rad_delta(SIGMA)>
 LENNARD_JONES 4.0 auto 0.3
 
-INTEGRATION_TIME_STEP 0.003	  				#    in units of SIGMA*sqrt(PARTICLE_MASS/EPSILON)
+INTEGRATION_TIME_STEP 0.01	  				#    in units of SIGMA*sqrt(PARTICLE_MASS/EPSILON)
 EQUILIBRATION_STEPS 2000
-PRODUCTION_STEPS 2
+PRODUCTION_STEPS 2000
 SAVING_INTERVALS 1 1 20000					# global_quantities configurations backup_positions&velocities
 								#    set to 0 last digit if no backups wanted
-RUNTIME_CALCULATIONS 0 0 1000					# this allows the calculation of radial density profile, gyration radius
-		      						#    and charge distribution during the production run.
-		      						#    First and second options enable/disable (1/0) them
-		      						#          during the equilibration and production stage .
-								#    The third option specifies the steps-interval between two savings
-# The sign is equal to 1 if you want to save. The first number refers to the equilibration run, the second one to the production run.
-     # SAVE_ATTRIBUTE <particles|part_img|forces_splitted|velocities|mols_com|mols_com_img|mols_forces_splitted|mols_velocities|energy|virial> 1 1
+
+# 1=YES , 0=NO ; first number refers to the equilibration run, second one to the production stage.
+# SAVE_ATTRIBUTE <particles|part_img|forces_splitted|velocities|mols_com|mols_com_img|mols_forces_splitted|mols_velocities|energy|virial> <0|1> <0|1>
  SAVE_FORMAT xyz
  SAVE_ATTRIBUTE particles 1 1
  SAVE_ATTRIBUTE forces 1 1
@@ -36,12 +32,11 @@ RUNTIME_CALCULATIONS 0 0 1000					# this allows the calculation of radial densit
  SAVE_POTENTIAL_ENERGY 1 1
  SAVE_PARTIAL_POTENTIAL_ENERGIES 1 1
  SAVE_KINETIC_ENERGY 0 0
- SAVE_SECONDARY_POTENTIAL 0 0
  SAVE_TEMPERATURE 1 0
- SAVE_VOLUME 0 0
      # SAVE_MSD 0 1 <format:all|mols_cm> {<steps_file_name>}	# all = for all particles , mols_cm = for centers of mass of all molecules
- SAVE_MSD 0 1 all
+ SAVE_MSD 0 0 all
  SAVE_GYR 0 0
  SAVE_VIRIAL_PRESSURE 1 1
+
 # INITIAL_VELOCITIES_BY_FILE 0 velocities.dat				# if = 1 it loads the velocities by this specified file
 SAVING_DIRECTORY_NAME LJresults

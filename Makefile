@@ -3,7 +3,7 @@
 #==================================#
 # Compiler Configurations
 CXX = g++
-DEFAULT_CXXFLAGS = -Wall -std=c++11 -lm
+DEFAULT_CXXFLAGS = -Wall -std=c++14 -lm
 ADD_COMPILER_FLAGS ?=
 CXXFLAGS := $(sort $(DEFAULT_CXXFLAGS) $(ADD_COMPILER_FLAGS))
 
@@ -11,7 +11,7 @@ NVCC = nvcc
 ifndef CUDA_CC
 	CUDA_CC := $(shell nvidia-smi --query-gpu=compute_cap --format=csv,noheader | head -1 | tr -d '.')
 endif
-NVCCFLAGS = -x cu -std=c++14 --diag-warn -Xcompiler "-Wall -Wextra" -gencode arch=compute_$(CUDA_CC),code=sm_$(CUDA_CC) -v
+NVCCFLAGS = -x cu -ccbin $(CXX) -std=c++14 -Xcompiler "-Wall" -gencode arch=compute_$(CUDA_CC),code=sm_$(CUDA_CC) -v
 #==================================#
 
 #==================================#
@@ -44,7 +44,7 @@ DEPS = $(SRC) $(HEADERS)
 OBJ = obj/gas.o
 EXE = gas.exe
 
-all : test_gpu obj $(EXE)  ## Build GPU test, objects, and the main executable
+all : test_gpu $(EXE)  ## Build GPU test, objects, and the main executable
 	@echo "Built all the targets: "$(EXE)
 
 $(OBJ_MYLIBS): obj/%.o: lib/%.cpp obj ${DEPS_MYLIBS}  # Compile library object files
@@ -53,8 +53,8 @@ $(OBJ_MYLIBS): obj/%.o: lib/%.cpp obj ${DEPS_MYLIBS}  # Compile library object f
 obj/gas.o : src/gas.cpp $(DEPS) $(SRC_MYLIBS) $(DEPS_MYLIBS) obj  # Compile CUDA gas object
 	$(NVCC) $(NVCCFLAGS) -c src/gas.cpp -o $@
 
-gas.exe : obj/gas.o $(OBJ_MYLIBS)  ## Link final executable
-	$(NVCC) $(NVCCFLAGS) $^ -o $@
+gas.exe : $(OBJ_MYLIBS) obj/gas.o  ## Link final executable
+	$(NVCC) $^ -o $@
 
 obj :  # Create object directory
 	mkdir -p obj

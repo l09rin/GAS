@@ -139,8 +139,8 @@ void GPU_query( cudaDeviceProp *props ) {
  */
 template<typename Func>
 void findOptimalGrid( dim3 &grid , dim3 &block , Func kernel , int dataSize , int SmemSize ) {
-  int blockSize;   // The optimal block size
-  int minGridSize; // Minimum grid size needed to achieve the maximum occupancy
+  int blockSize = 0;   // The optimal block size
+  int minGridSize = 0; // Minimum grid size needed to achieve the maximum occupancy
   // Get the optimal block size for VV Kernel (before last argument is for dynamic shared memory...)
   cudaOccupancyMaxPotentialBlockSize( &minGridSize , &blockSize ,
 				      kernel , SmemSize , dataSize ) ;

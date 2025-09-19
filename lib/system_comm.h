@@ -25,7 +25,6 @@ template<class T>
 const std::string ClassName( const T *ptr ) ;
 class particle_3D ;
 class particle_2D ;
-class patchy_2D ;
 
 
 template < typename T >

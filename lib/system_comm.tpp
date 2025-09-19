@@ -250,10 +250,4 @@ const std::string ClassName(const particle_2D *ptr) {
   std::string s( "particle_2D" ) ;
   return s ;
 }
-
-template<>
-const std::string ClassName(const patchy_2D *ptr) {
-  std::string s( "patchy_2D" ) ;
-  return s ;
-}
 /*********************************************************************/

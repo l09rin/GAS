@@ -45,7 +45,7 @@ void col_vector::operator=( const col_vector &other ) {
 /**
  * @brief Clear vector values (set all elements to 0).
  */
-void clear( void ) {
+void col_vector::clear( void ) {
   for( int i=0; i<D; i++ ) element[i] = 0 ;
 }
 
