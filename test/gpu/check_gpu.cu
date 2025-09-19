@@ -4,7 +4,7 @@
 using std::cout ;
 
 
-int main( int argc, char **argv ) {
+int main() {
   cudaDeviceProp GPU_PROPS ;
 
   printf( "=============================================================\n"
