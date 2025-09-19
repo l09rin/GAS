@@ -137,6 +137,7 @@ The simulation produces:
 - **Trajectory files** (particle positions over time)  
 - **Thermodynamic logs** (energy, temperature, pressure)  
 - **Simulation parameter files**
+- **Configuration backups**  (position and velocities with machine precision)
 
 All outputs are written into the directory specified by  
 `SAVING_DIRECTORY_NAME` (default: current working directory).
